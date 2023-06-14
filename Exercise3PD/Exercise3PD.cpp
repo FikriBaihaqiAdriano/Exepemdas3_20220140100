@@ -9,10 +9,8 @@ public :
 	string nama;
 	vector<pengarang*> daftar_pengarang;
 	penerbit(string pNama) :nama(pNama) {
-		cout << "Penerbit \"" << nama << "\" ada\n";
 	}
 	~penerbit() {
-		cout << "Penerbit \"" << nama << "\" tidak ada\n";
 	}
 	void tambahPengarang(pengarang*);
 	void cetakPengarang();
@@ -24,10 +22,8 @@ public:
 	vector<penerbit*> daftar_penerbit;
 
 	pengarang(string pNama) :nama(pNama) {
-		cout << "Pengarang \"" << nama << "\" ada\n";
 	}
 	~pengarang() {
-		cout << "Pengarang \"" << nama << "\" tidak ada\n";
 	}
 
 	void tambahPenerbit(penerbit*);
