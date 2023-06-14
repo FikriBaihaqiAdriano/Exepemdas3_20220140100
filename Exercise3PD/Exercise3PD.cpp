@@ -1,20 +1,80 @@
-// Exercise3PD.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <vector>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+class pengarang;
+class penerbit {
+public :
+	string nama;
+	vector<pengarang*> daftar_pengarang;
+	penerbit(string pNama) :nama(pNama) {
+		cout << "Penerbit \"" << nama << "\" ada\n";
+	}
+	~penerbit() {
+		cout << "Penerbit \"" << nama << "\" tidak ada\n";
+	}
+	void tambahPengarang(pengarang*);
+	void cetakPengarang();
+};
+
+class pengarang {
+public:
+	string nama;
+	vector<penerbit*> daftar_penerbit;
+
+	pengarang(string pNama) :nama(pNama) {
+		cout << "Pengarang \"" << nama << "\" ada\n";
+	}
+	~pengarang() {
+		cout << "Pengarang \"" << nama << "\" tidak ada\n";
+	}
+
+	void tambahPenerbit(penerbit*);
+	void cetakPenerbit();
+};
+
+void penerbit::tambahPengarang(pengarang* pPengarang) {
+	daftar_pengarang.push_back(pPengarang);
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void penerbit::cetakPengarang() {
+	cout << "Daftar pengarang pada penerbit \"" << this->nama << "\":\n";
+	for (auto& a : daftar_pengarang) {
+		cout << a->nama << "\n";
+	}
+	cout << endl;
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void pengarang::tambahPenerbit(penerbit* pPenerbit) {
+	daftar_penerbit.push_back(pPenerbit);
+	pPenerbit->tambahPengarang(this);
+}
+
+void pengarang::cetakPenerbit() {
+	cout << "Daftar Penerbit yang diikuti \"" << this->nama << "\":\n";
+	for (auto& a : daftar_penerbit) {
+		cout << a->nama << "\n";
+	}
+	cout << endl;
+}
+
+int main() {
+	pengarang* varPengarang1 = new pengarang("Joko");
+	pengarang* varPengarang2 = new pengarang("Lia");
+	pengarang* varPengarang3 = new pengarang("Asroni");
+	pengarang* varPengarang4 = new pengarang("Giga");
+	penerbit* varPenerbit1 = new penerbit("Game Press");
+	penerbit* varPenerbit2 = new penerbit("Intan Pariwara");
+
+	varPenerbit1->tambahPengarang(varPengarang1);
+	varPenerbit1->tambahPengarang(varPengarang2);
+	varPenerbit1->tambahPengarang(varPengarang4);
+	varPenerbit2->tambahPengarang(varPengarang3);
+	varPenerbit2->tambahPengarang(varPengarang4);
+	varPengarang4->tambahPenerbit(varPenerbit1);
+	varPengarang4->tambahPenerbit(varPenerbit2);
+
+	varPenerbit1->cetakPengarang();
+	varPenerbit2->cetakPengarang();
+	return 0;
+}
