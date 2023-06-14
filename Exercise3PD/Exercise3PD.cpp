@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 
+class buku;
 class pengarang;
 class penerbit {
 public :
@@ -33,6 +34,21 @@ public:
 	void cetakPenerbit();
 };
 
+class buku {
+public:
+	string nama;
+	vector<pengarang*> daftar_pengarang;
+
+	buku(string pNama) :nama(pNama) {
+		cout << "buku \"" << nama << "\" ada\n";
+	}
+	~buku() {
+		cout << "buku \"" << nama << "\" tidak ada\n";
+	}
+
+	void tambahPenerbit(penerbit*);
+	void cetakPenerbit();
+};
 void penerbit::tambahPengarang(pengarang* pPengarang) {
 	daftar_pengarang.push_back(pPengarang);
 }
@@ -76,5 +92,14 @@ int main() {
 
 	varPenerbit1->cetakPengarang();
 	varPenerbit2->cetakPengarang();
+	varPengarang4->cetakPenerbit();
+
+	delete varPengarang1;
+	delete varPengarang2;
+	delete varPengarang3;
+	delete varPengarang4;
+	delete varPenerbit1;
+	delete varPenerbit2;
+
 	return 0;
 }
